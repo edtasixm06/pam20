@@ -1,4 +1,4 @@
-# pam
+# PAM
 
 ## @edt ASIX M06 2020-2021
 
