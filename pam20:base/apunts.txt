@@ -1,0 +1,93 @@
+Unitats de RAMDISK 
+  disc virtual de memòria
+  mount -t tmpfs -o size=100M tmpfs /mnt
+  umount /mnt
+
+Exportar / Importar NFS
+
+  dnf -y install nfs-utils
+  systemctl  start nfs-server
+
+  # cat /etc/exports
+  /usr/share/man *(rw,sync)
+  /usr/share/doc *(ro,sync)
+  /var/tmp       192.168.0.*(rw,sync)
+  /tmp           *.informatica.escoladeltreball.org(ro,sync)
+
+
+  mount -t nfs localhost:/usr/share/man  /mnt
+  mount -t nfs4
+
+Atenció: 
+  - localhost --> ::1 ipv6
+  - 127.0.0.1 --> 127.0.0.1 ipv4
+
+  localhost:/usr/share/man on /mnt type nfs4 (rw,relatime,vers=4.2,rsize=1048576,wsize=1048576,namlen=255,hard,proto=tcp6,timeo=600,retrans=2,sec=sys,clientaddr=::1,local_lock=none,addr=::1)
+ 
+  tcp6 --> clientaddr=::1 --> ::1 localhost en IPv6
+
+  2049/tcp open  nfs
+
+   mount -t nfs 127.0.0.1:/usr/share/doc  /mnt
+   127.0.0.1:/usr/share/doc on /mnt type nfs4 (rw,relatime,vers=4.2,rsize=1048576,wsize=1048576,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=127.0.0.1,local_lock=none,addr=127.0.0.1)
+
+
+# En el servidor
+ # exportfs -v
+ /var/tmp      	192.168.0.*(sync,wdelay,hide,no_subtree_check,sec=sys,rw,secure,root_squash,no_all_squash)
+ /tmp          	*.informatica.escoladeltreball.org(sync,wdelay,hide,no_subtree_check,sec=sys,ro,secure,root_squash,no_all_squash)
+ /usr/share/man	<world>(sync,wdelay,hide,no_subtree_check,sec=sys,rw,secure,root_squash,no_all_squash)
+ /usr/share/doc	<world>(sync,wdelay,hide,no_subtree_check,sec=sys,ro,secure,root_squash,no_all_squash)
+
+
+# Un client pot preguntar a un servidor que exporta
+ # showmount -e localhost
+ Export list for localhost:
+ /usr/share/doc *
+ /usr/share/man *
+ /tmp           *.informatica.escoladeltreball.org
+ /var/tmp       192.168.0.*
+
+======================================================================================
+1) editar /etc/pam.d/system-auth
+     auth     optional pam_mount.so
+     session  optional pam_mount.so
+
+2) /etc/security/pam_mount.conf.xml
+
+   * crear ~/tmp  --> ramdisk 100M
+
+   <!-- muntar ~/tmp amb un ramdisk de 100M -->
+    <volume
+       user="*"
+       fstype="tmpfs"
+       mountpoint="~/tmp"
+       options="size=100M" 
+     />
+
+     <-- muntar a ~/man el recurs NFS 172.18.0.1:/usr/share/doc -->
+     <volume 
+         user="*"
+         fstype="nfs" 
+         server="172.18.0.1" 
+         path="/usr/share/man" 
+         mountpoint="~/man" 
+     />       
+
+    <-- muntar només per  a unix02 ~/unix02/mydoc  NFS 172.18.0.1:/usr/share/doc
+     <volume 
+         user="unix2"
+         fstype="nfs" 
+         server="172.18.0.1" 
+         path="/usr/share/doc" 
+         mountpoint="~/%(USER)/mydoc" 
+     />
+
+
+
+
+
+
+
+
+ 
