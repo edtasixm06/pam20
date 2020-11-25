@@ -1,0 +1,7 @@
+#%PAM-1.0
+
+auth       optional        pam_echo.so [ abans de la crida ]
+auth       substack         auxiliar.pam
+auth       optional        pam_echo.so [ despres de la crida ]
+auth       sufficient      pam_permit.so
+account    sufficient      pam_permit.so

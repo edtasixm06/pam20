@@ -1,0 +1,4 @@
+auth  optional pam_echo.so [ soc al inici auxiliar ]
+auth  requisite pam_succeed_if.so user = unix02
+auth  optional pam_echo.so [ soc al final de auxiliar ]
+
