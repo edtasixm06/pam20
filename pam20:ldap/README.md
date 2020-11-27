@@ -21,6 +21,6 @@ ASIX M06-ASO Escola del treball de barcelona
 
 ```
 $ docker run --rm --name ldap.edt.org -h ldap.edt.org --net 2hisix -p 389:389 -d edtasixm06/ldap20:latest 
-$ docker run --rm --name pam.edt.org --hostname pam.edt.org --net 2hisix2 --privileged -it edtasixm06/pam20:ldap
+$ docker run --rm --name pam.edt.org --hostname pam.edt.org --net 2hisix --privileged -it edtasixm06/pam20:ldap
 ```
 
