@@ -24,7 +24,7 @@ ASIX M06-ASO Escola del treball de barcelona
 
 * **edtasixm06/pam20:ldap** host pam per practicar *PAM* amb autenticació local
   unix (*pam_unix.so*) i autenticació LDAP (amb *pam_ldap.so*). Utilitza el paquet
-  *nss-pam-ldapd*. Cal configurar: *ldap.conf*, *nslcd*, *nscd*, *nssitch*.
+  *nss-pam-ldapd*. Cal configurar: *ldap.conf*, *nslcd*, *nscd* i *nssitch*.
   L'autentitació es configura al *system-auth*.
 
 
