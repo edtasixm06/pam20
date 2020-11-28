@@ -13,13 +13,15 @@ ASIX M06-ASO Escola del treball de barcelona
 
 * **edtasixm06/pam20:base** host pam per practicar *PAM* amb chfn i system-auth. Es tracten els types
   auth i session amb chfn practicant el significat de optional, sufficient, required i requisite i el 
-  mòdul pam_unix.so. El type password amb pwquality. El type account amb pam_time.so. 
-  El type sessions amb pam_mkhomedir.so i pam_mount.so. Es practica pam_mount.so amb un muntatge tmpfs
+  mòdul pam_unix.so. El type password amb *pwquality*. El type account amb *pam_time.so*. 
+  El type sessions amb *pam_mkhomedir.so* i *pam_mount.so*. Es practica *pam_mount.so* amb un muntatge tmpfs
   i un de nfs4.
 
   Atenció, cal usar en el container --privileged per poder fer els muntatges nfs.
 
-  ```$ docker run --rm --name pam.edt.org --hostname pam.edt.org --net hisx2 --privileged -it edtasixm06/pam20:base```
+  ```
+  $ docker run --rm --name pam.edt.org --hostname pam.edt.org --net hisx2 --privileged -it edtasixm06/pam20:base
+  ```
 
 
 * **edtasixm06/pam20:ldap** host pam per practicar *PAM* amb autenticació local
@@ -33,5 +35,29 @@ ASIX M06-ASO Escola del treball de barcelona
   ```
   $ docker run --rm --name ldap.edt.org -h ldap.edt.org --net 2hisix -p 389:389 -d edtasixm06/ldap20:latest
   $ docker run --rm --name pam.edt.org --hostname pam.edt.org --net 2hisix --privileged -it edtasixm06/pam20:ldap
+  ```
+
+* **edtasixm06/pam20:python** host pam basat en pam20:base per practicar crear una aplicació PAM Aware i per
+  crear el nostre propi mòdul de PAM.
+
+  Amb l'aplicació PAM Aware *pamware.py* es fa un programa que mostra els números del 1 al 10 però sempre i quant
+  l'usuari que l'executa sigui un usuari autenticat (*pam_unix.so*).
+
+  Es dissenya un mòdul propi de PAM anomenat *pam_mates.py* que autentica els usuaris segons si saben respondre
+  o no a una pregunta de mates. Els usuaris que en saben queden autenticats, si no diuen la resposta correcta
+  es denega l'autenticació. Per poder usar un modul pam escrit en python cal descarregar, compilar i incorporar
+  com a llibreia el mòdul *pam_pyhton.so*.
+
+
+  ```
+  $ docker run --rm --name pam.edt.org --hostname pam.edt.org --net 2hisix -it edtasixm06/pam20:python
+
+  # Test pam_pyhton.so pam_mates.py
+  su - unix01
+  chfn
+
+  # Test pamwarare.py
+  python3 /opt/docker/pamaware.py
+
   ```
 
