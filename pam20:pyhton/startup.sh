@@ -12,13 +12,18 @@ cp /opt/docker/login.defs /etc/login.defs
 # pam aware
 pip install python-pam
 
-# pam_python.so // pam_mates.py
+# pam_python.so // pam_mates.py------------------
 tar xvzf pam-python-1.0.8.tar.gz
 cp /opt/docker/features.h /usr/include/features.h
 cd /opt/docker/pam-python-1.0.8 
 make
 cp src/pam_python.so /usr/lib64/security/.
 cd -
+# -------------------------------------------------
+# Simplificar la imatge copiant el mòdul ja compilat
+# cp /opt/docker/pam_python.so /usr/lib64/security/.
+# --------------------------------------------------
+
 cp /opt/docker/chfn  /etc/pam.d/chfn
 
 /bin/bash
