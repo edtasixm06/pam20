@@ -5,6 +5,7 @@
 auth        required      pam_env.so
 auth        optional      pam_mount.so
 auth        sufficient    pam_unix.so try_first_pass nullok
+auth        optional      pam_mount.so
 auth        sufficient    pam_ldap.so
 auth        required      pam_deny.so
 
