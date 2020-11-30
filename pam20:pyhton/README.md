@@ -22,6 +22,10 @@ ASIX M06-ASO Escola del treball de barcelona
   es denega l'autenticació. Per poder usar un modul pam escrit en python cal descarregar, compilar i incorporar 
   com a llibreia el mòdul *pam_pyhton.so*.
 
+  *Nota*: La imatge pesa molt perquè incorpora molts paquets per compilar el mòdul pam_python.so. Si es vol fer
+  drecera es pot descarregar i usar directament el fitxer pam_python.so del git i copiar-lo al directori de mòduls
+  pam (sempre que sigui la versió de sistema apropiada).
+
 
   ```
   $ docker run --rm --name pam.edt.org --hostname pam.edt.org --net 2hisix -it edtasixm06/pam20:python
