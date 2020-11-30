@@ -15,6 +15,7 @@ ASIX M06-ASO Escola del treball de barcelona
   Es crea automàticament el directori home dels usuaris de ldap i es munta un recurs tmpfs de 100MB.
 
   Atenció: fabricat usant Fedora-27 en lloc de Fedora-32 per usar *authconfig* en lloc de *authselect* 
+
   Atenció: cal usar en el container --privileged per poder fer els muntatges.
 
 ```
